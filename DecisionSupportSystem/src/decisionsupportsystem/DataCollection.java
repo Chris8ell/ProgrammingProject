@@ -16,47 +16,77 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author phidi
  */
 
-
-
-public class MainSystem {
+public class DataCollection implements MqttCallback{
  
-    private String sensor1;
-    private String sensor2;
-    private String sensor3;
+    private String sensor;
     private String folder = "";
     private String fileName = "";
-    
-    public MainSystem() throws IOException {
-        sensor1 = "None";
-        sensor2 = "None";
-        sensor3 = "None";
-        
-        BufferedReader file;
+    MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
 
+    public DataCollection() throws MqttException {
+        sensor = "None";
+        
+        
+        //startSubscriber(topic);
+
+        //BufferedReader file;
+/*
         try {
             file = new BufferedReader (new FileReader ("config.txt"));
             folder = file.readLine();
             file.close(); 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MainSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataCollection.class.getName()).log(Level.SEVERE, null, ex);
         }
+*/
     }
     
+    public void startSubscriber(String channel) throws MqttException {
+
+        System.out.println("== START SUBSCRIBER ==");
+
+        client.setCallback(this);
+        client.connect();
+        //System.out.println(channels[0]);
+        client.subscribe(channel);
         
-    public void openRepository() throws IOException{
+    }
+    
+    public void connectionLost(Throwable throwable) {
+        System.out.println("Connection to MQTT broker lost!");
+    }
+
+    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+        //System.out.println(new String (mqttMessage.getPayload()));
+        //System.out.println(getClass().getMethod("messageReceived", String.class, byte[].class));
+        
+        sensor = new String(mqttMessage.getPayload());
+    }
+
+    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+    } 
+        
+    public void openFileRepository() throws IOException{
         
         BufferedReader file;
         
         try {
             
             fileName = "";
+
             File actual = new File(folder);
+
             for(long x = 0; x < 999999999; x = x + 1) {
             }
             
@@ -74,40 +104,29 @@ public class MainSystem {
                 // loop through each line of the file and parse data based on ; delimiter
                 while (fileLine != null) {
                     splitFileLine = fileLine.split(";");
-                    sensor1 = splitFileLine[0];
-                    sensor2 = splitFileLine[1];
-                    sensor3 = splitFileLine[2];
-
+                    sensor = splitFileLine[0];
+                    
                     fileLine = file.readLine();
 
                 }
                 file.close();
-                System.out.println(folder + fileName + "File");
+                //System.out.println(folder + fileName + "File");
                 Files.delete(Paths.get(folder + fileName));
             }
-        
         }
                 
         catch(Exception e){
             System.out.println("No data was loaded from " + e.getMessage());
             System.out.println();
         }
-
-    }
-           
-    
-    public String getSensorData1() {
-        
-        return sensor1;
     }
     
-    public String getSensorData2() {
-        
-        return sensor2;
+    public void closeSubscriber() throws MqttException {
+        client.disconnect();
     }
     
-    public String getSensorData3() {
-        
-        return sensor3;
+    public String getSensorData() {
+        return sensor;
     }
+    
 }
