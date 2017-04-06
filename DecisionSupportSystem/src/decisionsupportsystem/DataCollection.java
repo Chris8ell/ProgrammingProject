@@ -29,14 +29,14 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class DataCollection implements MqttCallback{
  
-    private String sensor;
+    private String[] sensor;
     private String folder = "";
     private String fileName = "";
     MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
 
-    public DataCollection() throws MqttException {
-        sensor = "None";
-        
+    public DataCollection(int numSensors) throws MqttException {
+        //sensor = "None";
+        sensor = new String[numSensors];
         
         //startSubscriber(topic);
 
@@ -70,8 +70,12 @@ public class DataCollection implements MqttCallback{
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
         //System.out.println(new String (mqttMessage.getPayload()));
         //System.out.println(getClass().getMethod("messageReceived", String.class, byte[].class));
-        
-        sensor = new String(mqttMessage.getPayload());
+        String tempString;
+        String[] splitLine;
+        tempString = new String(mqttMessage.getPayload());
+        splitLine = tempString.split(";");
+        sensor[Integer.parseInt(splitLine[0].substring(splitLine[0].length()))-1]=splitLine[1];    
+
     }
 
     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
@@ -104,7 +108,7 @@ public class DataCollection implements MqttCallback{
                 // loop through each line of the file and parse data based on ; delimiter
                 while (fileLine != null) {
                     splitFileLine = fileLine.split(";");
-                    sensor = splitFileLine[0];
+                    sensor[0] = splitFileLine[0];
                     
                     fileLine = file.readLine();
 
@@ -125,7 +129,7 @@ public class DataCollection implements MqttCallback{
         client.disconnect();
     }
     
-    public String getSensorData() {
+    public String[] getSensorData() {
         return sensor;
     }
     

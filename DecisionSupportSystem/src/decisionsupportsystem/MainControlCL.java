@@ -52,7 +52,7 @@ public class MainControlCL {
         
         DataCollection [] data = new DataCollection[6];
         for (int x=0;x<6;x++){
-            data[x] = new DataCollection();
+            data[x] = new DataCollection(3);
         }
         
         //String newSet[] = {"sensor_1","sensor_2"};
@@ -73,8 +73,14 @@ public class MainControlCL {
                 do {
                     clearScreen();
                     printMenu();
+                    System.out.println();
                     for (int x=0;x<6;x++){
-                        System.out.println(data[x].getSensorData());
+                        String[] dataPrint;
+                        dataPrint = data[x].getSensorData();
+                        for (int i=0; i < dataPrint.length; i++){
+                            System.out.println(dataPrint[i]);
+                        }
+                        
                     }
                     
                     try {
@@ -110,10 +116,11 @@ public class MainControlCL {
                         //data.startSubscriber();
 
                         if (subCount == 0){
-                            thread.start();
+                            
                             for (;subCount<6;subCount++){
                                 data[subCount].startSubscriber("sensor_"+subCount);
                             }
+                            thread.start();
                         }
 
                         break;
@@ -168,8 +175,6 @@ public class MainControlCL {
     public void activateMessges() throws IOException {
         
        // boolean exit = false;
-        
-        
         Thread thread;
         thread = new Thread(new Runnable() {
             private volatile boolean exit = false;
