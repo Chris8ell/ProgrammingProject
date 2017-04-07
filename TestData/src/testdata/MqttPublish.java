@@ -9,6 +9,7 @@ package testdata;
  *
  * @author phidi
  */
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,13 +74,19 @@ public class MqttPublish {
     }
     
     public static void runnableRun(String[] sensorName, MqttClient client){
+        Random r = new Random();
+        int Low = 0;
+        int High = 2;
+        int Result;
         
-        for(long x = 0;x<100000;x=x+1){
+        for(long x = 0;x<100;x=x+1){
            try {
                 TimeUnit.MILLISECONDS.sleep(500);
                 for (int i=0; i < sensorName.length; i++){
                     TimeUnit.MILLISECONDS.sleep(500);
-                    publishMessage(sensorName[i] + ": " + x, client);
+                    
+                    Result= r.nextInt(High-Low) + Low;
+                    publishMessage(sensorName[i] + ": " + Result, client);
                 }
                 
             } catch (InterruptedException | MqttException ex) {

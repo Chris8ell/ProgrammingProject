@@ -55,7 +55,7 @@ public class DataCollection implements MqttCallback{
     public void startSubscriber(String channel) throws MqttException {
 
         System.out.println("== START SUBSCRIBER ==");
-
+        System.out.println(channel);
         client.setCallback(this);
         client.connect();
         //System.out.println(channels[0]);
@@ -73,8 +73,13 @@ public class DataCollection implements MqttCallback{
         String tempString;
         String[] splitLine;
         tempString = new String(mqttMessage.getPayload());
-        splitLine = tempString.split(";");
-        sensor[Integer.parseInt(splitLine[0].substring(splitLine[0].length()))-1]=splitLine[1];    
+        //System.out.println(tempString);
+        splitLine = tempString.split(":");
+        //System.out.println("line 1 is: " + splitLine[0]);
+        //System.out.println("line 2 is: " + splitLine[1]);
+        //System.out.println(splitLine[0].substring(splitLine[0].length()-1));
+        sensor[Integer.parseInt(splitLine[0].substring(splitLine[0].length()-1))-1]=splitLine[1];
+        //System.out.println(sensor[Integer.parseInt(splitLine[0].substring(splitLine[0].length()-1))-1]);
 
     }
 

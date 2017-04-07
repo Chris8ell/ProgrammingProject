@@ -27,6 +27,7 @@ public class MainControlCL {
 
     DataCollection mainSystem; 
     private static boolean exit = false;
+    private static int machines = 1;
     
 /*
     public static void main(String args[]) throws IOException, InterruptedException {
@@ -51,7 +52,7 @@ public class MainControlCL {
         
         
         DataCollection [] data = new DataCollection[6];
-        for (int x=0;x<6;x++){
+        for (int x=0;x<machines;x++){
             data[x] = new DataCollection(3);
         }
         
@@ -74,7 +75,7 @@ public class MainControlCL {
                     clearScreen();
                     printMenu();
                     System.out.println();
-                    for (int x=0;x<6;x++){
+                    for (int x=0;x<machines;x++){
                         String[] dataPrint;
                         dataPrint = data[x].getSensorData();
                         for (int i=0; i < dataPrint.length; i++){
@@ -117,8 +118,8 @@ public class MainControlCL {
 
                         if (subCount == 0){
                             
-                            for (;subCount<6;subCount++){
-                                data[subCount].startSubscriber("sensor_"+subCount);
+                            for (;subCount<machines;subCount++){
+                                data[subCount].startSubscriber("Machine1");
                             }
                             thread.start();
                         }
@@ -128,7 +129,7 @@ public class MainControlCL {
                     case 'B':
                         
                         if (subCount != 0){
-                            for (int x = 0;x<6;x++){
+                            for (int x = 0;x<machines;x++){
                                 data[x].closeSubscriber();
                                 
                             }
