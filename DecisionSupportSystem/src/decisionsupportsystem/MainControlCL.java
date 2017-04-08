@@ -226,7 +226,8 @@ public class MainControlCL {
         }
         else
         {
-            System.out.print("\f");
+            //System.out.print("\f");
+            System.out.print("\033\143");
         }
     }
 
