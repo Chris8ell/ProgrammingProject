@@ -28,6 +28,7 @@ public class MainControlCL {
     DataCollection mainSystem; 
     private static boolean exit = false;
     private static int machines = 1;
+    private static int sensors = 5;
     
 /*
     public static void main(String args[]) throws IOException, InterruptedException {
@@ -51,9 +52,9 @@ public class MainControlCL {
     public static void main(String args[]) throws IOException, InterruptedException, MqttException {
         
         
-        DataCollection [] data = new DataCollection[6];
+        DataCollection [] data = new DataCollection[sensors];
         for (int x=0;x<machines;x++){
-            data[x] = new DataCollection(3);
+            data[x] = new DataCollection(sensors);
         }
         
         //String newSet[] = {"sensor_1","sensor_2"};
@@ -119,7 +120,7 @@ public class MainControlCL {
                         if (subCount == 0){
                             
                             for (;subCount<machines;subCount++){
-                                data[subCount].startSubscriber("Machine1");
+                                data[subCount].startSubscriber("machine1");
                             }
                             thread.start();
                         }
