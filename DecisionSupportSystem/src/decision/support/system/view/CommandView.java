@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package decisionsupportsystem;
+package decision.support.system.view;
 
+import decision.support.system.model.DataCollection;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,11 +18,11 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
  *
- * @author phidi
+ * @author Phidias Burnell
  */
 
 
-public class MainControlCL {
+public class CommandView {
     
     private static final Scanner sc = new Scanner(System.in);
 
@@ -88,7 +89,7 @@ public class MainControlCL {
                     try {
                         TimeUnit.MILLISECONDS.sleep(50);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(MainControlCL.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(CommandView.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } while (!exit);
             }
@@ -192,7 +193,7 @@ public class MainControlCL {
                         System.out.println(mainSystem.getSensorData());
 
                     } catch (IOException ex) {
-                        Logger.getLogger(MainControlCL.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(CommandView.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } while (!exit);
             }
