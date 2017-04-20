@@ -6,8 +6,12 @@
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/CapFeedingMachineImpl.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DataCollection.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/MachineImpl.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DecisionSupportEngine.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/interfaces/CapFeedingMachine.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DecisionSupportEngineImpl.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/CommandView.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/SensorImpl.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/interfaces/Sensor.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/interfaces/Machine.java</file>
         </group>
     </open-files>
 </project-private>
