@@ -5,7 +5,6 @@
  */
 package decision.support.system.model.interfaces;
 
-import decision.support.system.model.DecisionSupportEngine;
 
 /**
  *
@@ -13,5 +12,9 @@ import decision.support.system.model.DecisionSupportEngine;
  */
 public interface DSECallback {
     
-    public void gameResult(DecisionSupportEngine engine);
+    
+    
+    public void sensorInitialisation(DecisionSupportEngine engine);
+    
+    public void sensorUpdate(Sensor sensor, DecisionSupportEngine engine);
 }

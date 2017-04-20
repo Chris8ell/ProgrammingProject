@@ -5,14 +5,8 @@
  */
 package decision.support.system.model;
 
-import java.io.BufferedReader;
-import java.io.File;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-
-import java.nio.file.Paths;
+import decision.support.system.model.interfaces.DecisionSupportEngine;
+import java.util.Date;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -26,17 +20,21 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class DataCollection implements MqttCallback{
  
-    private String[] sensor;
+    //private final String[] sensor;
     private String folder = "";
     private String fileName = "";
+    private String channel;
+    
     MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
+    DecisionSupportEngine decisionSupportEngine;
 
-    public DataCollection(int numSensors) throws MqttException {
-        sensor = new String[numSensors];
+    public DataCollection(int numSensors, DecisionSupportEngine decisionSupportEngine) throws MqttException {
+        //this.sensor = new String[numSensors];
+        this.decisionSupportEngine = decisionSupportEngine;
     }
     
     public void startSubscriber(String channel) throws MqttException {
-        System.out.println(channel);
+        this.channel = channel;
         client.setCallback(this);
         client.connect();
         client.subscribe(channel);
@@ -47,21 +45,35 @@ public class DataCollection implements MqttCallback{
     }
 
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+
         String tempString;
         String[] splitLine;
         tempString = new String(mqttMessage.getPayload());
-        splitLine = tempString.split(":");
-        sensor[Integer.parseInt(splitLine[0].substring(splitLine[0].length()-1))-1]=splitLine[1];
+        splitLine = tempString.split(":");  
+        Date timestamp = new Date();
+        
+
+        try{
+             decisionSupportEngine.addDataToSensors(
+                     channel, 
+                     splitLine[0].replaceAll("\\s+",""), 
+                     Integer.valueOf(splitLine[1].replaceAll("\\s+","")), 
+                     timestamp);
+             
+        }catch (NumberFormatException e) {
+            e.getMessage();
+            e.getLocalizedMessage();
+        }
+            
+       
+        System.out.println("Data stored in machine sensor");
     }
 
+    
     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
     } 
     
     public void closeSubscriber() throws MqttException {
         client.disconnect();
-    }
-    
-    public String[] getSensorData() {
-        return sensor;
     }
 }

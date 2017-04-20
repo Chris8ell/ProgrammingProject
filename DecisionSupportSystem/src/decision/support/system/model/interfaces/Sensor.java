@@ -5,7 +5,7 @@
  */
 package decision.support.system.model.interfaces;
 
-import java.sql.Time;
+import java.util.Date;
 
 /**
  *
@@ -21,7 +21,7 @@ public interface Sensor {
      * @param sensorData captures data from sensor
      * @param timeStamp for the sensor data when captured
      */
-    public void setSensor(int sensorData, Time timeStamp);
+    public void setSensor(int sensorData, Date timeStamp);
     
     /**
      * @return the ID of this sensor
@@ -36,7 +36,7 @@ public interface Sensor {
     /**
      * @return the Timestamp of this sensor
      */
-    public Time getTimeStamp();
+    public Date getTimeStamp();
     
     /**
      * @return the Type of this sensor

@@ -5,8 +5,9 @@
  */
 package decision.support.system.model;
 
+import decision.support.system.model.interfaces.Machine;
 import decision.support.system.model.interfaces.Sensor;
-import java.sql.Time;
+import java.util.Date;
 
 /**
  *
@@ -16,19 +17,20 @@ public class SensorImpl implements Sensor{
     
     String sensorID;
     int sensorData;
-    Time timeStamp;
+    Date timeStamp;
     sensorType type;
     int sensorCount;
+    Machine machine;
     
     
-    public void SensorImpl(String sensorID, sensorType type) {
+    public SensorImpl(String sensorID, sensorType type) {
         this.sensorID = sensorID;
         this.type = type;
         sensorCount = 0;
     }
     
     @Override
-    public void setSensor(int sensorData,  Time timeStamp) {
+    public void setSensor(int sensorData,  Date timeStamp) {
         this.sensorData = sensorData;
         this.timeStamp = timeStamp;
         if (type == sensorType.BINARY) {
@@ -47,7 +49,7 @@ public class SensorImpl implements Sensor{
     }
     
     @Override
-    public Time getTimeStamp() {
+    public Date getTimeStamp() {
         return timeStamp;
     }
 

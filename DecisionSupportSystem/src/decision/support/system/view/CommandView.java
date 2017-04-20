@@ -5,13 +5,20 @@
  */
 package decision.support.system.view;
 
+import decision.support.system.callback.DSECallbackImpl;
+import decision.support.system.model.CapFeedingMachineImpl;
 import decision.support.system.model.DataCollection;
+import decision.support.system.model.DecisionSupportEngineImpl;
+import decision.support.system.model.MachineImpl;
+import decision.support.system.model.interfaces.CapFeedingMachine;
+import static decision.support.system.model.interfaces.CapFeedingMachine.CAP_FEED_MACHINE_SENSORS;
+import static decision.support.system.model.interfaces.CapFeedingMachine.SENSORID;
+import decision.support.system.model.interfaces.DecisionSupportEngine;
+import decision.support.system.model.interfaces.Machine;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -25,42 +32,27 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class CommandView {
     
     private static final Scanner sc = new Scanner(System.in);
-
-    DataCollection mainSystem; 
     private static boolean exit = false;
     private static int machines = 1;
     private static int sensors = 5;
+    private static Logger logger = Logger.getLogger("CommandView");
+    private static final DecisionSupportEngine decisionSupportEngine = new DecisionSupportEngineImpl();
+    private static String[] machineNumber = new String[] {"machine01"};
     
-/*
-    public static void main(String args[]) throws IOException, InterruptedException {
-        boolean exit = false;
-        System.out.println("Start");
-        DataCollection mainSystem = new DataCollection(); 
-       
-        do {
-
-            //System.out.println("Start running");
-            mainSystem.openRepository();
-            System.out.print(mainSystem.getSensorData1());
-            System.out.print(mainSystem.getSensorData2());
-            System.out.println(mainSystem.getSensorData3());
-        } while (!exit);
-        
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s = br.readLine();
-    }
-*/    
+  
     public static void main(String args[]) throws IOException, InterruptedException, MqttException {
         
         
-        DataCollection [] data = new DataCollection[sensors];
-        for (int x=0;x<machines;x++){
-            data[x] = new DataCollection(sensors);
-        }
+        decisionSupportEngine.addEngineCallback(new DSECallbackImpl());
+        Machine machines[] = new Machine[] { new CapFeedingMachineImpl(machineNumber[0], decisionSupportEngine)};
         
-        //String newSet[] = {"sensor_1","sensor_2"};
-        //DataCollection data = new DataCollection(newSet);
-
+        for (Machine machine : machines) {
+			decisionSupportEngine.addMachine(machine);}
+        
+        for (Machine machine : decisionSupportEngine.getAllMachineSetup())
+                                logger.log(Level.INFO, machine.toString());
+        
+        DataCollection dataCollection = new DataCollection(SENSORID.length, decisionSupportEngine);
         
         clearScreen();
         char selection = '\0';
@@ -74,23 +66,16 @@ public class CommandView {
             @Override
             public void run() {
                 do {
-                    clearScreen();
-                    printMenu();
-                    System.out.println();
-                    for (int x=0;x<machines;x++){
-                        String[] dataPrint;
-                        dataPrint = data[x].getSensorData();
-                        for (int i=0; i < dataPrint.length; i++){
-                            System.out.println(dataPrint[i]);
-                        }
-                        
-                    }
                     
-                    try {
+                        //clearScreen();
+                        //printMenu();
+                        //System.out.println();
+                    
+                    /*try {
                         TimeUnit.MILLISECONDS.sleep(50);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(CommandView.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    }*/
                 } while (!exit);
             }
         });
@@ -116,33 +101,28 @@ public class CommandView {
                 switch (selection)
                 {
                     case 'A':
-                        //data.startSubscriber();
-
                         if (subCount == 0){
                             
-                            for (;subCount<machines;subCount++){
-                                data[subCount].startSubscriber("machine1");
-                            }
-                            thread.start();
+                            dataCollection.startSubscriber(machineNumber[0]);
                         }
 
                         break;
 
                     case 'B':
-                        
-                        if (subCount != 0){
-                            for (int x = 0;x<machines;x++){
-                                data[x].closeSubscriber();
-                                
-                            }
-                            exit = true;
-                            
-                            subCount =0;
+                        try {
+                            dataCollection.closeSubscriber();
+                        } catch (MqttException e){
+                            break;
                         }
                         break;
 
                     case 'X':
                         System.out.println("Exiting the program...");
+                        try {
+                            dataCollection.closeSubscriber();
+                        } catch (MqttException e){
+                            break;
+                        }
                         break;
 
                   default:
@@ -153,13 +133,7 @@ public class CommandView {
             
             clearScreen();
             
-             
-            
-            //System.out.println(data.getSensorData());
-            
         } while (selection != 'X');
-
-
     }
     
     public static void printMenu(){
@@ -175,45 +149,7 @@ public class CommandView {
         // prompt user to enter selection
         System.out.print("Enter selection: ");
     }
-    public void activateMessges() throws IOException {
-        
-       // boolean exit = false;
-        Thread thread;
-        thread = new Thread(new Runnable() {
-            private volatile boolean exit = false;
-            int x = 0;
-            @Override
-            public void run() {
-                
-                
-                do {
-                    try {
-                        //System.out.println("Start running");
-                        mainSystem.openFileRepository();
-                        System.out.println(mainSystem.getSensorData());
-
-                    } catch (IOException ex) {
-                        Logger.getLogger(CommandView.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } while (!exit);
-            }
-            
-            public void stopRunning(){
-                exit = true;
-            }
-        });
-            
-        thread.start();   
    
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input = br.readLine();
-
-         
-
-        //System.in.read();
-        //stop();
-
-    }
     
     public void stop(){
        // exit = true;
