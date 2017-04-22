@@ -23,4 +23,6 @@ public interface CapFeedingMachine {
                 SENSORID[2]+":"+Sensor.sensorType.BINARY, 
                 SENSORID[3]+":"+Sensor.sensorType.BINARY, 
                 SENSORID[4]+":"+Sensor.sensorType.RANGE};
+    
+    static final int NUMBER_OF_TESTS = 6;
 }

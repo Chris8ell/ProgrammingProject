@@ -13,18 +13,16 @@ import decision.support.system.model.interfaces.DecisionSupportEngine;
  * @author Phidias Burnell
  */
 public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMachine {
-    statusFlag tests[] = new statusFlag[6];
+    
     int test;
     
     public CapFeedingMachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine) {
-        super(machineID, decisionSupportEngine);
+        super(machineID, decisionSupportEngine, NUMBER_OF_TESTS);
         super.initialiseSensors(CAP_FEED_MACHINE_SENSORS);
-        
-        
     }
     
     @Override
-    public void calculateMachineStatus() {
+    public statusFlag[] calculateMachineStatus() {
         
         /*  Decision support funtion logic for machine 1 */
         
@@ -44,9 +42,9 @@ public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMach
         
         test = 3;
         if (super.getSensor(SENSORID[2]).getTriggerCount()+1 >= super.getSensor(SENSORID[3]).getTriggerCount()){
-            tests[test-1] = statusFlag.GREEN;
+            super.getTestArray()[test-1] = statusFlag.GREEN;
         } else {
-            tests[test-1] = statusFlag.RED;
+            super.getTestArray()[test-1] = statusFlag.RED;
         }
         
         /*  Test 4:
@@ -56,9 +54,9 @@ public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMach
         
         test = 4;
         if (super.getSensor(SENSORID[2]).getTriggerCount()+1 >= super.getSensor(SENSORID[3]).getTriggerCount()){
-            tests[test-1] = statusFlag.GREEN;
+            super.getTestArray()[test-1] = statusFlag.GREEN;
         } else {
-            tests[test-1] = statusFlag.RED;
+            super.getTestArray()[test-1] = statusFlag.RED;
         }
         
         /*  Test 5:
@@ -68,9 +66,9 @@ public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMach
         
         test = 5;
         if (super.getSensor(SENSORID[3]).getTriggerCount()+1 >= super.getSensor(SENSORID[4]).getTriggerCount()){
-            tests[test-1] = statusFlag.GREEN;
+            super.getTestArray()[test-1] = statusFlag.GREEN;
         } else {
-            tests[test-1] = statusFlag.RED;
+            super.getTestArray()[test-1] = statusFlag.RED;
         }
         
         /*
@@ -81,12 +79,13 @@ public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMach
         
         test = 6;
         if (super.getSensor(SENSORID[4]).getSensorData() >= 4000 && super.getSensor(SENSORID[4]).getSensorData() <= 5000){
-            tests[test-1] = statusFlag.GREEN;
+            super.getTestArray()[test-1] = statusFlag.GREEN;
         } else if(super.getSensor(SENSORID[4]).getSensorData() >= 3500 && super.getSensor(SENSORID[4]).getSensorData() <= 5500){
-            tests[test-1] = statusFlag.AMBER;
+            super.getTestArray()[test-1] = statusFlag.AMBER;
         } else {
-            tests[test-1] = statusFlag.RED;
+            super.getTestArray()[test-1] = statusFlag.RED;
         }
-  
+ 
+        return super.getTestArray();
     }
 }

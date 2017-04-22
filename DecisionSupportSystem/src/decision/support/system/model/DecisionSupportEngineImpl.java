@@ -9,6 +9,7 @@ import decision.support.system.callback.DSECallbackImpl;
 import decision.support.system.model.interfaces.DSECallback;
 import decision.support.system.model.interfaces.DecisionSupportEngine;
 import decision.support.system.model.interfaces.Machine;
+import decision.support.system.model.interfaces.Machine.statusFlag;
 import decision.support.system.model.interfaces.Sensor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,11 +72,17 @@ public class DecisionSupportEngineImpl implements DecisionSupportEngine {
     @Override
     public void addDataToSensors (String machineID, String sensorID, int sensorData, Date timestamp){   
         this.getMachine(machineID).getSensor(sensorID).setSensor(sensorData, timestamp);
-
-        for (DSECallback callback : callbacks){
-            for (Sensor sensor : this.getMachine(machineID).getSensors().values()){
-                callback.sensorUpdate(sensor, this);
-            }
+        
+        try {
+            statusFlag tests[] = new statusFlag[6];
+            tests = this.getMachine(machineID).calculateMachineStatus();
+            for (DSECallback callback : callbacks){
+            callback.testUpdate(this, this.getMachine(machineID), this.getMachine(machineID).calculateMachineStatus());
+        }
+        } catch (Exception e){
+            e.printStackTrace();
+            e.getMessage();
+            e.getStackTrace();
         }
     }
 }

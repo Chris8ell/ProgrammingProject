@@ -27,7 +27,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MqttPublish {
     
     
-    private static String topic;
+    private static String topic = "machine01";
     private static int qos = 2;
     //private static String broker1 = "tcp://54.66.148.136";
     private static String broker1 = "tcp://localhost:1883";
@@ -40,7 +40,7 @@ public class MqttPublish {
     public static void main(String[] args) throws InterruptedException, MqttException{
 
         Thread presence, belt, t3;
-        newClient1 = openPublisher("machine01", newClient1, broker1);
+        newClient1 = openPublisher(topic, newClient1, broker1);
         
         presence = new Thread(new Runnable(){
                 
@@ -282,7 +282,15 @@ public class MqttPublish {
         System.out.println("Publishing message: "+newMessage);
         MqttMessage message = new MqttMessage(newMessage.getBytes());
         message.setQos(qos);
-        client.publish(topic, message);
+        try{
+            client.publish(topic, message);
+        } catch (MqttException ex) {
+            if (ex.getReasonCode() == 32104){
+                newClient1 = openPublisher(topic, newClient1, broker1);
+                client.publish(topic, message);
+            }
+        }
+        
         System.out.println("Message published");
     }
     

@@ -36,7 +36,7 @@ public interface Machine {
      * @return return a string which contains sensor ID, timestamp, sensor data, 
      * calculated status flag (green, amber, or red), and count for binary sensors.
      */
-    public void calculateMachineStatus();
+    public statusFlag[] calculateMachineStatus();
     
     /**
      *
@@ -57,4 +57,9 @@ public interface Machine {
      */
     public Map <String, Sensor> getSensors();
     
+    /**
+     *
+     * @return
+     */
+    public statusFlag[] getTestArray();
 }

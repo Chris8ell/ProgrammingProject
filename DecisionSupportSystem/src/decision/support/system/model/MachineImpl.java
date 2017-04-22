@@ -20,14 +20,15 @@ import java.util.logging.Level;
  */
 public class MachineImpl implements Machine{
     
-    private String machineID;
-    private DecisionSupportEngine decisionSupportEngine;
-    
-    private Map <String, Sensor> sensors = new ConcurrentHashMap <String, Sensor>();
+    private final String machineID;
+    private final DecisionSupportEngine decisionSupportEngine;
+    private final statusFlag tests[];
+    private final Map <String, Sensor> sensors = new ConcurrentHashMap <>();
 
-    public MachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine) {
+    public MachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine, int sensorQty) {
         this.machineID = machineID;
         this.decisionSupportEngine = decisionSupportEngine;
+        this.tests = new statusFlag[sensorQty];
     }
     
     @Override
@@ -53,8 +54,8 @@ public class MachineImpl implements Machine{
     }
 
     @Override
-    public void calculateMachineStatus() {
-        //return sensorArray;
+    public statusFlag[] calculateMachineStatus() {
+        return tests;
     }
 
     @Override
@@ -80,5 +81,9 @@ public class MachineImpl implements Machine{
             sensorIDs += " " + getSensor(SENSORID[i]).getSensorID() +"_"+ getSensor(SENSORID[i]).getType();
         }                      
         return "Machine: " + this.machineID + ", Sensors initalised:" + sensorIDs;
-    } 
+    }
+    
+    public statusFlag[] getTestArray() {
+        return tests;
+    }
 }

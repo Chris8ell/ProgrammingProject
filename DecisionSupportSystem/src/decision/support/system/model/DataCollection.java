@@ -64,9 +64,6 @@ public class DataCollection implements MqttCallback{
             e.getMessage();
             e.getLocalizedMessage();
         }
-            
-       
-        System.out.println("Data stored in machine sensor");
     }
 
     
