@@ -103,7 +103,8 @@ public class MqttPublish {
             sensorData[i]="0";
         }
         
-        for(long x = 0;x<100;x=x+1) {
+        for(long x = 0;x<1000;x=x+1) {
+            System.out.println("Sensor Counter 1: " + x);
             try {
                 TimeUnit.MILLISECONDS.sleep(1000);
                 currentTime = new Date();
@@ -132,8 +133,14 @@ public class MqttPublish {
                     }
          
                     if (capCounter > 0 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 5){
-                        sensorData[1]="1";
-                        eTimeSensorTwo = new Date(); 
+                       //On count 18 sensor 1 should have cap arrive code below stops that for two turns to create an Error
+                       //if ( x >= 18 && x <= 19){
+                          //sensorData[1]="0";
+                       //}
+                       //else{
+                          sensorData[1]="1";
+                          eTimeSensorTwo = new Date(); 
+                       //}   
                     }
                     
                     if (sensorData[1].equals("1") && sensorData[2].equals("1") && ((currentTime.getTime()-eTimeSensorTwo.getTime())/1000) >= 1){
@@ -156,10 +163,16 @@ public class MqttPublish {
                     }
                     
                     if (released == true && ((currentTime.getTime()-rTimeSensorTwo.getTime())/1000) >= 2){
-                        sensorData[3]="1";
-                        released = false; 
+                       sensorData[3]="1";
+                       released = false;
                     } else if (released == false){
+                          //if ( x >= 38 ){
+                            //sensorData[3]="1";
+                            //released = false;
+                          //}
+                          //else{
                         sensorData[3]="0";
+                          //}
                     }
                     
                     
@@ -217,7 +230,8 @@ public class MqttPublish {
         int vHigh = 3, high = 4600;
         int vResult, result;
         
-        for(long x = 0;x<100;x=x+1){
+        for(long y = 0;y<1000;y=y+1){
+           System.out.println("Belt Counter 1: " + y);
            try {
                 TimeUnit.MILLISECONDS.sleep(500);
                 for (int i=0; i < sensorName.length; i++){
@@ -234,7 +248,10 @@ public class MqttPublish {
                     }
                     
                     result = r.nextInt(high-low) + low;
-                        
+                    // Line of code below makes belt run at 7000 on the 30th call until 40th call
+                    if (y > 30 && y < 40 ){
+                        result = 7000;
+                    }   
                     publishMessage(sensorName[i] + ":" + result, client);
                 }
                 
