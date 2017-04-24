@@ -133,14 +133,8 @@ public class MqttPublish {
                     }
          
                     if (capCounter > 0 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 5){
-                       //On count 18 sensor 1 should have cap arrive code below stops that for two turns to create an Error
-                       //if ( x >= 18 && x <= 19){
-                          //sensorData[1]="0";
-                       //}
-                       //else{
                           sensorData[1]="1";
-                          eTimeSensorTwo = new Date(); 
-                       //}   
+                          eTimeSensorTwo = new Date();   
                     }
                     
                     if (sensorData[1].equals("1") && sensorData[2].equals("1") && ((currentTime.getTime()-eTimeSensorTwo.getTime())/1000) >= 1){
@@ -165,18 +159,18 @@ public class MqttPublish {
                     if (released == true && ((currentTime.getTime()-rTimeSensorTwo.getTime())/1000) >= 2){
                        sensorData[3]="1";
                        released = false;
-                    } else if (released == false){
-                          //if ( x >= 38 ){
-                            //sensorData[3]="1";
-                            //released = false;
-                          //}
-                          //else{
+                    } else if (released == false){                 
                         sensorData[3]="0";
-                          //}
+                          
                     }
                     
+                    //if ( x >= 18 && x <= 19){
+                          //sensorData[1]="0";
+                       //}
                     
-                    
+                    //if ( x >= 38 ){
+                           //sensorData[3]="1";
+                    //}
                     
                                      
                     System.out.println(capCounter);
