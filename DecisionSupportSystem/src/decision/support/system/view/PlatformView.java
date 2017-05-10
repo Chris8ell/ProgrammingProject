@@ -21,6 +21,8 @@ public class PlatformView extends JFrame{
     private final DecisionSupportEngine decisionSupportEngine;
     private final PlatformController platformController;
     private PlatformDisplayPanel platformDisplayPanel;
+    private PlatformDisplayMachine03 platformDisplayMachine03;
+    private PlatformDisplayMachine04 platformDisplayMachine04;
     private PlatformToolbar platformToolbar;
     
     public PlatformView(DecisionSupportEngine decisionSupportEngine) throws MqttException{
@@ -37,11 +39,12 @@ public class PlatformView extends JFrame{
         
         this.platformToolbar = new PlatformToolbar(this);
         this.platformDisplayPanel = new PlatformDisplayPanel(this);
-        //this.gameMenu = new GameMenu(this);
+        this.platformDisplayMachine03 = new PlatformDisplayMachine03(this);
+        this.platformDisplayMachine04 = new PlatformDisplayMachine04(this);
                 
         this.add(this.platformToolbar, BorderLayout.NORTH);
         this.add(this.platformDisplayPanel, BorderLayout.CENTER);
-        //this.setJMenuBar(this.gameMenu);
+        //this.add(this.platformDisplayMachine01, BorderLayout.CENTER);
     }
     
     public DecisionSupportEngine getDecisionSupportEngine(){
@@ -52,7 +55,28 @@ public class PlatformView extends JFrame{
         return platformDisplayPanel;
     }
     
-
+    public void setPlatformDisplayMachine03(){
+        this.remove(this.platformDisplayPanel);
+        this.add(this.platformDisplayMachine03, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+    
+     public void setPlatformDisplayMachine04(){
+        this.remove(this.platformDisplayPanel);
+        this.add(this.platformDisplayMachine04, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+    
+    public void setPlatformDisplayPanel(){
+        this.remove(this.platformDisplayMachine03);
+        this.remove(this.platformDisplayMachine04);
+        this.add(this.platformDisplayPanel, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+            
     public PlatformController getPlatformController(){
         return this.platformController;
     }

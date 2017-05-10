@@ -5,6 +5,7 @@
  */
 package decision.support.system.controller;
 
+import decision.support.system.view.PlatformDisplayMachine03;
 import decision.support.system.view.PlatformDisplayPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,12 @@ public class PlatformDisplayPanelController implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent ae){
-
+        if (ae.getActionCommand() == PlatformDisplayPanel.MACHINE03){
+            platformDisplayPanel.getMainView().setPlatformDisplayMachine03();
+        }
+        
+        if (ae.getActionCommand() == PlatformDisplayPanel.MACHINE04){
+            platformDisplayPanel.getMainView().setPlatformDisplayMachine04();
+        }
     }
 }

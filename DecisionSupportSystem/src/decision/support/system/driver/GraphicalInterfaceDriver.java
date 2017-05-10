@@ -8,6 +8,7 @@ package decision.support.system.driver;
 import decision.support.system.view.PlatformView;
 import decision.support.system.model.DecisionSupportEngineImpl;
 import decision.support.system.model.interfaces.DecisionSupportEngine;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;

@@ -25,13 +25,13 @@ public class PlatformToolbar extends JPanel{
     private PlatformToolbarController controller;
     private final PlatformView platformView;
     
-     public PlatformToolbar(PlatformView platformView) {
+    public PlatformToolbar(PlatformView platformView) {
         
         this.setBackground(Color.DARK_GRAY);
         this.platformView = platformView;
         this.controller = new PlatformToolbarController(this);
         
-        //Simple toolbar with two buttons, place bet and roll dice
+        //Simple toolbar with two buttons
         this.startDecisionEngine = new JButton(START);
         this.startDecisionEngine.setActionCommand(START);
         startDecisionEngine.setPreferredSize(new Dimension(100, 30));
@@ -43,8 +43,7 @@ public class PlatformToolbar extends JPanel{
         stopDecisionEngine.setPreferredSize(new Dimension(100, 30));
         this.add(this.stopDecisionEngine);
         this.stopDecisionEngine.addActionListener(controller);
-        
-        //Default the buttons to not usable until a player is added
+       
         setStartButton(true);
         setStopButton(false);
     }

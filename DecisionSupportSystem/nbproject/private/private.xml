@@ -3,12 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformToolbar.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformDisplayMachine04Controller.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformDisplayPanel.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DecisionSupportEngineImpl.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformDisplayPanelController.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformView.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/CapFeedingMachineImpl.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformToolbar.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformDisplayMachine04.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/MachineImpl.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformToolbarController.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformController.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/CommandView.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformDisplayPanelController.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/driver/GraphicalInterfaceDriver.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformDisplayMachine03Controller.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformDisplayMachine03.java</file>
         </group>
     </open-files>
 </project-private>
