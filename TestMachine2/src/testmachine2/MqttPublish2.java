@@ -1,4 +1,4 @@
-package testmachine;
+package testmachine2;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,10 +24,10 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-public class MqttPublish {
+public class MqttPublish2 {
     
     
-    private static String topic = "04";
+    private static String topic = "machine02";
     private static int qos = 2;
     private static String broker1 = "tcp://54.66.148.136";
     //private static String broker1 = "tcp://localhost:1883";
@@ -35,11 +35,11 @@ public class MqttPublish {
     private static String broker3 = "tcp://localhost:1883";
     private static String clientId = "JavaSample";
     public static MqttClient newClient1, newClient2;
-    public static int sensor1 = 0, sensor2 = 0, sensor3 = 0, sensor4 = 0;
+    public static int sensor1 = 0, sensor2 = 0, sensor3 = 0, sensor4 = 0, sensor5 = 0;
     
     public static void main(String[] args) throws InterruptedException, MqttException{
 
-        Thread presence, belt, t3;
+        Thread presence, t3;
         newClient1 = openPublisher(topic, newClient1, broker1);
         
         presence = new Thread(new Runnable(){
@@ -49,21 +49,21 @@ public class MqttPublish {
                 
                 public void run() {
                     
-                    String[] sensors = {"01", "02", "03","04"};
+                    String[] sensors = {"01", "02", "03","04", "05"};
                     sequenceData(sensors, newClient1);
                 }
             });
 
-        belt = new Thread(new Runnable(){
+      /*  belt = new Thread(new Runnable(){
             MqttClient newClient2;
             int x = 0;
             @Override
             public void run() {
 
-                String[] sensors = {"05"};
+                String[] sensors = {"06"};
                 motorData(sensors, newClient1);
             }
-        });
+        });*\
 
             /*
             t3 = new Thread(new Runnable(){
@@ -78,7 +78,7 @@ public class MqttPublish {
             });
 */
         presence.start();
-        belt.start();
+        //belt.start();
  //           t3.start();
             
 
@@ -95,9 +95,12 @@ public class MqttPublish {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Date eTimeSensorOne = new Date();
         Date rTimeSensorOne = new Date();
-        Date eTimeSensorTwo = new Date();
-        Date rTimeSensorTwo = new Date();
         Date currentTime = new Date();
+        int magazine = 0;
+        int slide = 0;
+        int ready = 0;
+        int armPosition = 0;
+        int vacum = 0;
         
         for (int i=0; i < sensorName.length; i++){
             sensorData[i]="0";
@@ -115,54 +118,60 @@ public class MqttPublish {
                         start = true;
                     }
                 } else {
-                    if (capCounter <=5) {
+                    if (magazine == 0 ) {
                         if(sensorData[0].equals("0") && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 2){
-                        sensorData[0]="1";
-                        eTimeSensorOne = new Date();
+                           magazine = 1;
+                           sensorData[0]="1";
+                           eTimeSensorOne = new Date();
+
                     }
                     
                     if(sensorData[0].equals("1") && ((currentTime.getTime()-eTimeSensorOne.getTime())/1000) >= 2){
                         sensorData[0]="0";
-                        capCounter += 1;
                         if (sensorData[1].equals("1")){
-                            rTimeSensorOne = new Date();
+                           rTimeSensorOne = new Date();
                         }
                     }
                     
                         
                     }
          
-                    if (capCounter > 0 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 5){
+                    if (magazine == 1 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 3){
                           sensorData[1]="1";
-                          eTimeSensorTwo = new Date();   
+                          sensorData[0]="0";
+                          slide = 1;   
                     }
                     
-                    if (sensorData[1].equals("1") && sensorData[2].equals("1") && ((currentTime.getTime()-eTimeSensorTwo.getTime())/1000) >= 1){
-                        capCounter -= 1;
-                        eTimeSensorTwo = new Date();
-                        rTimeSensorTwo = new Date();
-                        if (capCounter == 0){
-                            sensorData[1]="0";
-                            eTimeSensorTwo = new Date();
-                        }
-                        released = true;
-                    } else if (sensorData[1].equals("1") && ((currentTime.getTime()-eTimeSensorTwo.getTime())/1000) >= 1) {
+                    if (slide == 1 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 4){
                         sensorData[2]="1";
-                        capCounter -= 1;
-                        eTimeSensorTwo = new Date();
-                        if (capCounter == 0){
-                            sensorData[1]="0";
-                            eTimeSensorTwo = new Date();
-                        }
+                        sensorData[1]="0";
+                        ready = 1;
+                    } 
+                    
+                    if (ready == 1 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 7){
+                       sensorData[3]="1";
+                       sensorData[2]="0";
+                       armPosition = 1;  
+                    } 
+                          
+                    if (armPosition == 1 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 9){
+                      sensorData[4]="1";
+                      sensorData[3]="0";
+                      vacum = 1;  
                     }
                     
-                    if (released == true && ((currentTime.getTime()-rTimeSensorTwo.getTime())/1000) >= 2){
-                       sensorData[3]="1";
-                       released = false;
-                    } else if (released == false){                 
-                        sensorData[3]="0";
-                          
+                    if (vacum == 1 && ((currentTime.getTime()-rTimeSensorOne.getTime())/1000) >= 10){
+                       sensorData[4]="0";
+                       start = false;
+                       magazine = 0;
+                       slide = 0;
+                       ready = 0;
+                       vacum = 0;
+                       armPosition = 0;
+                       eTimeSensorOne = new Date();
+                       rTimeSensorOne = new Date();
                     }
+                      
                     
                     //if ( x >= 18 && x <= 19){
                           //sensorData[1]="0";
@@ -191,7 +200,7 @@ public class MqttPublish {
                 
                 */
             } catch (InterruptedException | MqttException ex) {
-                Logger.getLogger(MqttPublish.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MqttPublish2.class.getName()).log(Level.SEVERE, null, ex);
             }     
         }  
         
@@ -214,11 +223,11 @@ public class MqttPublish {
         try {
             closePublisher(client);
         } catch (MqttException ex) {
-            Logger.getLogger(MqttPublish.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MqttPublish2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void motorData(String[] sensorName, MqttClient client){
+   /* public static void motorData(String[] sensorName, MqttClient client){
         Random r = new Random();
         int vLow = 0, low = 4500;
         int vHigh = 3, high = 4600;
@@ -250,16 +259,16 @@ public class MqttPublish {
                 }
                 
             } catch (InterruptedException | MqttException ex) {
-                Logger.getLogger(MqttPublish.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MqttPublish2.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         try {
             closePublisher(client);
         } catch (MqttException ex) {
-            Logger.getLogger(MqttPublish.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MqttPublish2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    */
     
     public static MqttClient openPublisher(String newTopic, MqttClient client, String broker){
         
@@ -309,4 +318,5 @@ public class MqttPublish {
         client.disconnect();
         System.out.println("Disconnected");
     }
+
 }
