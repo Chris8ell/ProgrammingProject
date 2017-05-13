@@ -28,14 +28,15 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class PlatformController {
     private final PlatformView platformView;
     private final DecisionSupportEngine decisionSupportEngine;
-    private static String[] machineNumber = new String[] {"machine01"};
+    private static String[] machineNumber = new String[] {"03", "04" };
     private static DataCollection dataCollection;
     
     public PlatformController(PlatformView platformView) throws MqttException{
         this.platformView = platformView;
         this.decisionSupportEngine = platformView.getDecisionSupportEngine();
         this.decisionSupportEngine.addEngineCallback(new GUIDSECallbackImpl(this));
-        Machine machines[] = new Machine[] { new CapFeedingMachineImpl(machineNumber[0], decisionSupportEngine)};
+        Machine machines[] = new Machine[] { new CapFeedingMachineImpl(machineNumber[0], decisionSupportEngine),
+                                                new CapFeedingMachineImpl(machineNumber[1], decisionSupportEngine)};
         for (Machine machine : machines) {
 			decisionSupportEngine.addMachine(machine);}
         
@@ -46,12 +47,11 @@ public class PlatformController {
     public void startDecisionSupportSystem() {
         
         new Thread() {
-            
-            //rolls the player using defaults from customer interface
             @Override
             public void run() {
                 try {
                     PlatformController.dataCollection.startSubscriber(machineNumber[0]);
+                    PlatformController.dataCollection.startSubscriber(machineNumber[1]); //Doesnt like two subscribers .....!!!!
                 } catch (MqttException ex) {
                     ex.printStackTrace();
                 }
@@ -83,8 +83,14 @@ public class PlatformController {
         for (int i = 0; i < sensorKeys.size(); i++){
             sensor[i] = Integer.toString(machine.getSensor(sensorKeys.get(i)).getSensorData());
         }
+
+        switch (machine.getMachineID()) {
+            case "03":   this.platformView.getPlatformDisplayMachine03().updateView(machine.getMachineID(), machine.getMachineID(), sensor, test);
+                        break;
+            case "04":   this.platformView.getPlatformDisplayMachine04().updateView(machine.getMachineID(), machine.getMachineID(), sensor, test);
+                     break;
             
- 
-        this.platformView.getPlatformDisplayPanel().updateView(machine.getMachineID(), machine.getMachineID(), sensor, test);
+        }
+       
     }
 }

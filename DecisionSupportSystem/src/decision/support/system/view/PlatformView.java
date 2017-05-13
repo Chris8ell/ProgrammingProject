@@ -33,7 +33,8 @@ public class PlatformView extends JFrame{
     }
     
     private void initView(){
-        this.setBounds(250, 250, 800, 600);
+        
+        this.setBounds(250, 250, 1600, 600);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         
@@ -53,6 +54,14 @@ public class PlatformView extends JFrame{
     
     public PlatformDisplayPanel getPlatformDisplayPanel(){
         return platformDisplayPanel;
+    }
+    
+    public PlatformDisplayMachine03 getPlatformDisplayMachine03(){
+        return platformDisplayMachine03;
+    }
+    
+    public PlatformDisplayMachine04 getPlatformDisplayMachine04(){
+        return platformDisplayMachine04;
     }
     
     public void setPlatformDisplayMachine03(){

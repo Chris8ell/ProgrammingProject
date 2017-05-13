@@ -52,6 +52,7 @@ public class DataCollection implements MqttCallback{
         splitLine = tempString.split(":");  
         Date timestamp = new Date();
         
+        System.out.println("Message Arrived");
 
         try{
              decisionSupportEngine.addDataToSensors(

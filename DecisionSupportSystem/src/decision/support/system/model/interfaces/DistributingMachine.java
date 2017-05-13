@@ -9,7 +9,7 @@ package decision.support.system.model.interfaces;
  *
  * @author Phidias Burnell
  */
-public interface CapFeedingMachine {
+public interface DistributingMachine {
     static final String[] SENSORID = new String[] {
                 "01",
                 "02",
@@ -18,14 +18,14 @@ public interface CapFeedingMachine {
                 "05"};
     
     static final String[] TESTS = new String[] {
-                "If sensor 1 is triggered, sensor 2 should trigger within 4 seconds. amber <6< red",
-                "If sensor 2 is trigerred sensor 3 should trigger within 0.5 second. amber <1< red",
-                "If sensor 3 is triggered sensor 4 should trigger within 1 second if sensor 1 count is > 1. amber <2< red",
-                "Sensor 3 count should always be less than or equal to sensor 2 count. red <-1...0 >= red",
-                "Sensor 4 count should always be less than or equal to sensor 3 count. > red",
-                "Sensor 5 should always be between 4000 and 5000. red <= 3500 <= amber <= 4000 ... 5000 => amber => 5500 => red"};
+                "A cap should be present in the magazine",
+                "After the cap has been released the swival arm should be activated within one second",
+                "The swival arm should pick up the cap within 4 seconds of activation",
+                "Within 3 seconds the cap should be lifted up with the swival arm",
+                "Once the swival arm reaches stops moving the cap should be released immediately",
+                "Machine swival are operates within the acceptable speed range"};
    
-    static String[] CAP_FEED_MACHINE_SENSORS = new String[] {
+    static String[] DISTRIBUTING_MACHINE_SENSORS = new String[] {
                 SENSORID[0]+":"+Sensor.sensorType.BINARY, 
                 SENSORID[1]+":"+Sensor.sensorType.BINARY, 
                 SENSORID[2]+":"+Sensor.sensorType.BINARY, 

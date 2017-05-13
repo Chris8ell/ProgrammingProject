@@ -5,25 +5,25 @@
  */
 package decision.support.system.model;
 
-import decision.support.system.model.interfaces.CapFeedingMachine;
 import decision.support.system.model.interfaces.DecisionSupportEngine;
+import decision.support.system.model.interfaces.DistributingMachine;
 
 /**
  *
  * @author Phidias Burnell
  */
-public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMachine {
+public class DistributingMachineImpl extends MachineImpl implements DistributingMachine {
     
     int test;
     
-    public CapFeedingMachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine) {
+    public DistributingMachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine) {
         super(machineID, decisionSupportEngine, NUMBER_OF_TESTS);
-        super.initialiseSensors(CAP_FEED_MACHINE_SENSORS);
+        super.initialiseSensors(DISTRIBUTING_MACHINE_SENSORS);
     }
     
     @Override
     public statusFlag[] calculateMachineStatus() {
-        System.out.println("Test calc start");
+        
         /*  Decision support funtion logic for machine 1 */
         
         /*

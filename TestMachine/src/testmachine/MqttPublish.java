@@ -27,10 +27,10 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MqttPublish {
     
     
-    private static String topic = "machine01";
+    private static String topic = "04";
     private static int qos = 2;
-    private static String broker1 = "tcp://54.66.148.136";
-    //private static String broker1 = "tcp://localhost:1883";
+    //private static String broker1 = "tcp://54.66.148.136";
+    private static String broker1 = "tcp://localhost:1883";
     private static String broker2 = "tcp://localhost:1883";
     private static String broker3 = "tcp://localhost:1883";
     private static String clientId = "JavaSample";
