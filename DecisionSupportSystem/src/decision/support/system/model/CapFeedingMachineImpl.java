@@ -23,7 +23,7 @@ public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMach
     
     @Override
     public statusFlag[] calculateMachineStatus() {
-        System.out.println("Test calc start");
+   
         /*  Decision support funtion logic for machine 1 */
         
         /*

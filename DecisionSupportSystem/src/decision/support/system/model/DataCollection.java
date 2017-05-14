@@ -23,7 +23,7 @@ public class DataCollection implements MqttCallback{
     //private final String[] sensor;
     private String folder = "";
     private String fileName = "";
-    private String channel;
+    private String[] channel;
     
     MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
     DecisionSupportEngine decisionSupportEngine;
@@ -34,10 +34,12 @@ public class DataCollection implements MqttCallback{
     }
     
     public void startSubscriber(String channel) throws MqttException {
-        this.channel = channel;
+        this.channel = new String[]{"festo/03", "festo/04"};
         client.setCallback(this);
         client.connect();
-        client.subscribe(channel);
+        //client.subscribe("festo/04");
+        client.subscribe(this.channel);
+        
     }
     
     public void connectionLost(Throwable throwable) {
@@ -47,16 +49,16 @@ public class DataCollection implements MqttCallback{
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
 
         String tempString;
-        String[] splitLine;
+        String[] splitLine, machineNumber;
         tempString = new String(mqttMessage.getPayload());
+        
+        machineNumber = s.split("/");
         splitLine = tempString.split(":");  
         Date timestamp = new Date();
-        
-        System.out.println("Message Arrived");
 
         try{
              decisionSupportEngine.addDataToSensors(
-                     channel, 
+                     machineNumber[1], 
                      splitLine[0].replaceAll("\\s+",""), 
                      Integer.valueOf(splitLine[1].replaceAll("\\s+","")), 
                      timestamp);

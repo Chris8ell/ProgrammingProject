@@ -51,7 +51,7 @@ public class PlatformController {
             public void run() {
                 try {
                     PlatformController.dataCollection.startSubscriber(machineNumber[0]);
-                    PlatformController.dataCollection.startSubscriber(machineNumber[1]); //Doesnt like two subscribers .....!!!!
+                    //PlatformController.dataCollection.startSubscriber(machineNumber[1]); //Doesnt like two subscribers .....!!!!
                 } catch (MqttException ex) {
                     ex.printStackTrace();
                 }
