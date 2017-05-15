@@ -27,7 +27,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MqttPublish2 {
     
     
-    private static String topic = "machine02";
+    private static String topic = "festo/03";
     private static int qos = 2;
     private static String broker1 = "tcp://54.66.148.136";
     //private static String broker1 = "tcp://localhost:1883";

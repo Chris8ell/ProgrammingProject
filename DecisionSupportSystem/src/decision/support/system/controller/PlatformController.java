@@ -28,7 +28,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class PlatformController {
     private final PlatformView platformView;
     private final DecisionSupportEngine decisionSupportEngine;
-    private static String[] machineNumber = new String[] {"03", "04" };
+    private final String[] machineNumber = new String[] {"03", "04"};
+    private final String[] machineTopics = new String[] {"festo/03", "festo/04"};
     private static DataCollection dataCollection;
     
     public PlatformController(PlatformView platformView) throws MqttException{
@@ -50,8 +51,7 @@ public class PlatformController {
             @Override
             public void run() {
                 try {
-                    PlatformController.dataCollection.startSubscriber(machineNumber[0]);
-                    //PlatformController.dataCollection.startSubscriber(machineNumber[1]); //Doesnt like two subscribers .....!!!!
+                    PlatformController.dataCollection.startSubscriber(machineTopics);
                 } catch (MqttException ex) {
                     ex.printStackTrace();
                 }

@@ -29,17 +29,14 @@ public class DataCollection implements MqttCallback{
     DecisionSupportEngine decisionSupportEngine;
 
     public DataCollection(int numSensors, DecisionSupportEngine decisionSupportEngine) throws MqttException {
-        //this.sensor = new String[numSensors];
         this.decisionSupportEngine = decisionSupportEngine;
     }
     
-    public void startSubscriber(String channel) throws MqttException {
-        this.channel = new String[]{"festo/03", "festo/04"};
+    public void startSubscriber(String[] channel) throws MqttException {
+        this.channel = channel;
         client.setCallback(this);
         client.connect();
-        //client.subscribe("festo/04");
         client.subscribe(this.channel);
-        
     }
     
     public void connectionLost(Throwable throwable) {
@@ -55,7 +52,9 @@ public class DataCollection implements MqttCallback{
         machineNumber = s.split("/");
         splitLine = tempString.split(":");  
         Date timestamp = new Date();
-
+        
+        System.out.println(machineNumber[1]);
+        
         try{
              decisionSupportEngine.addDataToSensors(
                      machineNumber[1], 

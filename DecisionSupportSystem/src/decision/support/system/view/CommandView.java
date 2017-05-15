@@ -32,7 +32,8 @@ public class CommandView {
     private static int sensors = 5;
     private static Logger logger = Logger.getLogger("CommandView");
     private static final DecisionSupportEngine decisionSupportEngine = new DecisionSupportEngineImpl();
-    private static String[] machineNumber = new String[] {"machine01"};
+    private static String[] machineNumber = new String[] {"03", "04"};
+    private static String[] machineTopics = new String[] {"festo/03", "festo/04"};
     
   
     public static void main(String args[]) throws IOException, InterruptedException, MqttException {
@@ -98,7 +99,7 @@ public class CommandView {
                     case 'A':
                         if (subCount == 0){
                             
-                            dataCollection.startSubscriber(machineNumber[0]);
+                            dataCollection.startSubscriber(machineTopics);
                         }
 
                         break;

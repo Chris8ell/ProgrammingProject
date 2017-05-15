@@ -81,7 +81,6 @@ public class PlatformDisplayMachine03 extends JPanel{
             test[i].setVerticalAlignment(SwingConstants.CENTER);
         }
         
-        
         //Used GroupLayout to control the layout of the GUI
         //GroupLayout requires both horizontal and vertical positioning
         

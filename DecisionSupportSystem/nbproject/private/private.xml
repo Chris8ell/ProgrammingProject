@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/CapFeedingMachineImpl.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DataCollection.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DecisionSupportEngineImpl.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/interfaces/DistributingMachine.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/controller/PlatformController.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformDisplayMachine03.java</file>
-            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DistributingMachineImpl.java</file>
+            <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/model/DecisionSupportEngineImpl.java</file>
             <file>file:/C:/Users/phidi/Documents/GitHub/ProgrammingProject/DecisionSupportSystem/src/decision/support/system/view/PlatformView.java</file>
         </group>
     </open-files>
