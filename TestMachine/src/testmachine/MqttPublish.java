@@ -294,11 +294,13 @@ public class MqttPublish {
         MqttMessage message = new MqttMessage(newMessage.getBytes());
         message.setQos(qos);
         try{
-            client.publish(topic, message);
+            client.publish(topic, newMessage.getBytes(), qos, false);
         } catch (MqttException ex) {
             if (ex.getReasonCode() == 32104){
                 newClient1 = openPublisher(topic, newClient1, broker1);
-                client.publish(topic, message);
+                client.publish(topic, newMessage.getBytes(), qos, false);
+                //client.publish(topic, message);
+                
             }
         }
         

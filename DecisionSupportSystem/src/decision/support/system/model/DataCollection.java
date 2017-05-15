@@ -8,6 +8,7 @@ package decision.support.system.model;
 import decision.support.system.model.interfaces.DecisionSupportEngine;
 import java.util.Date;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -24,8 +25,11 @@ public class DataCollection implements MqttCallback{
     private String folder = "";
     private String fileName = "";
     private String[] channel;
+    private int[] qos;
     
-    MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
+    //MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
+    MqttAsyncClient client=new MqttAsyncClient("tcp://localhost:1883", MqttClient.generateClientId());
+    
     DecisionSupportEngine decisionSupportEngine;
 
     public DataCollection(int numSensors, DecisionSupportEngine decisionSupportEngine) throws MqttException {
@@ -34,9 +38,15 @@ public class DataCollection implements MqttCallback{
     
     public void startSubscriber(String[] channel) throws MqttException {
         this.channel = channel;
+        this.qos = new int[this.channel.length];
+        for(int i = 0; i < this.channel.length; i ++){
+            this.qos[i]=2;
+        }
+        
         client.setCallback(this);
         client.connect();
-        client.subscribe(this.channel);
+        client.subscribe(this.channel, this.qos);
+
     }
     
     public void connectionLost(Throwable throwable) {

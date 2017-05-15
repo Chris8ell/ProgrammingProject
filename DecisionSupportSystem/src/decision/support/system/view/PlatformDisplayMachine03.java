@@ -8,14 +8,15 @@ import decision.support.system.controller.PlatformDisplayMachine03Controller;
 import static decision.support.system.model.interfaces.DistributingMachine.TESTS;
 import java.awt.Color;
 import java.awt.Dimension;
+
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+
 
 public class PlatformDisplayMachine03 extends JPanel{
     
@@ -58,7 +59,7 @@ public class PlatformDisplayMachine03 extends JPanel{
         this.back.addActionListener(controller);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK);
-        
+          
         for (int i = 0; i < NO_OF_SENSORS; i++){
             sensorLabel[i] = new JLabel(String.valueOf(i + 1));
             sensorLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
