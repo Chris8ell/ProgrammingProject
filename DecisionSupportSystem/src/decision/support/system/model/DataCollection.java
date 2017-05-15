@@ -13,6 +13,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
  *
@@ -27,8 +28,9 @@ public class DataCollection implements MqttCallback{
     private String[] channel;
     private int[] qos;
     
+    MemoryPersistence dataStore = new MemoryPersistence();
     //MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
-    MqttAsyncClient client=new MqttAsyncClient("tcp://localhost:1883", MqttClient.generateClientId());
+    MqttAsyncClient client=new MqttAsyncClient("tcp://localhost:1883", MqttClient.generateClientId(),dataStore);
     
     DecisionSupportEngine decisionSupportEngine;
 
@@ -45,7 +47,12 @@ public class DataCollection implements MqttCallback{
         
         client.setCallback(this);
         client.connect();
-        client.subscribe(this.channel, this.qos);
+        try {
+            client.subscribe(this.channel, this.qos);
+        } catch (MqttException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getReasonCode());
+        }
 
     }
     
