@@ -1,18 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model;
 
 import decision.support.system.model.interfaces.Machine;
 import decision.support.system.model.interfaces.Sensor;
 import java.util.Date;
 
-/**
- *
- * @author Phidias Burnell
- */
 public class SensorImpl implements Sensor{
     
     String sensorID;

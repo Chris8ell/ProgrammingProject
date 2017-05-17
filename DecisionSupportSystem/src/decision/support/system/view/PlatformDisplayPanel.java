@@ -1,5 +1,7 @@
 /*
- *
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
 
 package decision.support.system.view;

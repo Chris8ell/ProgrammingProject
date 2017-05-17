@@ -1,16 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model.interfaces;
 
 import java.util.Map;
 
-/**
- *
- * @author Phidias Burnell
- */
 
 public interface Machine {
 
@@ -43,6 +40,12 @@ public interface Machine {
      * @return the ID of the machine as a string
      */
     public String getMachineID();
+    
+    /**
+     *
+     * @return Machine name
+     */
+    public String getMachineName();
     
     /**
      *

@@ -1,23 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model;
 
 import decision.support.system.model.interfaces.DecisionSupportEngine;
 import decision.support.system.model.interfaces.DistributingMachine;
 
-/**
- *
- * @author Phidias Burnell
- */
 public class DistributingMachineImpl extends MachineImpl implements DistributingMachine {
     
     int test;
     
     public DistributingMachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine) {
-        super(machineID, decisionSupportEngine, NUMBER_OF_TESTS);
+        super(machineID, MACHINE_NAME, decisionSupportEngine, NUMBER_OF_TESTS);
         super.initialiseSensors(DISTRIBUTING_MACHINE_SENSORS);
     }
     

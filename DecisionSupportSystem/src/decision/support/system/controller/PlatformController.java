@@ -1,30 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.controller;
 
 import decision.support.system.callback.GUIDSECallbackImpl;
 import decision.support.system.model.CapFeedingMachineImpl;
 import decision.support.system.model.DataCollection;
+import decision.support.system.model.DistributingMachineImpl;
 import static decision.support.system.model.interfaces.CapFeedingMachine.SENSORID;
 import decision.support.system.model.interfaces.DecisionSupportEngine;
 import decision.support.system.model.interfaces.Machine;
 import decision.support.system.model.interfaces.Machine.statusFlag;
-import decision.support.system.model.interfaces.Sensor;
 import decision.support.system.view.PlatformView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
-/**
- *
- * @author Phidias Burnell
- */
 public class PlatformController {
     private final PlatformView platformView;
     private final DecisionSupportEngine decisionSupportEngine;
@@ -36,7 +30,7 @@ public class PlatformController {
         this.platformView = platformView;
         this.decisionSupportEngine = platformView.getDecisionSupportEngine();
         this.decisionSupportEngine.addEngineCallback(new GUIDSECallbackImpl(this));
-        Machine machines[] = new Machine[] { new CapFeedingMachineImpl(machineNumber[0], decisionSupportEngine),
+        Machine machines[] = new Machine[] { new DistributingMachineImpl(machineNumber[0], decisionSupportEngine),
                                                 new CapFeedingMachineImpl(machineNumber[1], decisionSupportEngine)};
         for (Machine machine : machines) {
 			decisionSupportEngine.addMachine(machine);}

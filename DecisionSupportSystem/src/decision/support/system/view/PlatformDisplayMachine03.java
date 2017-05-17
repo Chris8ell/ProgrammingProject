@@ -1,5 +1,7 @@
 /*
- *
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
 
 package decision.support.system.view;
@@ -70,6 +72,9 @@ public class PlatformDisplayMachine03 extends JPanel{
                 sensor[i][t].setHorizontalAlignment(SwingConstants.CENTER);
                 sensor[i][t].setVerticalAlignment(SwingConstants.CENTER);
                 sensor[i][t].setBorder(border);
+                sensor[i][t].setOpaque(true);
+                sensor[i][t].setBackground(Color.BLACK);
+                sensor[i][t].setForeground(Color.BLACK);
             }
         }
         
@@ -80,6 +85,7 @@ public class PlatformDisplayMachine03 extends JPanel{
             test[i] = new JLabel(TESTS[i]);
             test[i].setHorizontalAlignment(SwingConstants.CENTER);
             test[i].setVerticalAlignment(SwingConstants.CENTER);
+            test[i].setOpaque(true);
         }
         
         //Used GroupLayout to control the layout of the GUI
@@ -93,23 +99,23 @@ public class PlatformDisplayMachine03 extends JPanel{
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(machineNameHeading)
                     .addComponent(machineNumberHeading)
-                    .addComponent(scenarioHeading)
-                    .addComponent(testLabel[0],10,10,50)
-                    .addComponent(testLabel[1],10,10,50)
-                    .addComponent(testLabel[2],10,10,50)
-                    .addComponent(testLabel[3],10,10,50)
-                    .addComponent(testLabel[4],10,10,50)
-                    .addComponent(testLabel[5],10,10,50)
-                    
                     .addComponent(back))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGap(10))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(machineName)
                     .addComponent(machineNumber)
+                    .addComponent(scenarioHeading))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(testLabel[0],10,10,50)
+                    .addComponent(testLabel[1],10,10,50)
+                    .addComponent(testLabel[2],10,10,50)
+                    .addComponent(testLabel[3],10,10,50)
+                    .addComponent(testLabel[4],10,10,50)
+                    .addComponent(testLabel[5],10,10,50))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)        
                     .addComponent(sensorHeading)
                     .addComponent(sensorLabel[0],10,10,50)
-
                     .addComponent(sensor[0][0],10,10,50)
                     .addComponent(sensor[0][1],10,10,50)
                     .addComponent(sensor[0][2],10,10,50)
@@ -245,6 +251,18 @@ public class PlatformDisplayMachine03 extends JPanel{
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(back))
         );
+        
+        this.sensor[0][0].setBackground(Color.WHITE);
+        this.sensor[1][1].setBackground(Color.WHITE);
+        this.sensor[2][1].setBackground(Color.WHITE);
+        this.sensor[0][2].setBackground(Color.WHITE);
+        this.sensor[0][3].setBackground(Color.WHITE);
+        this.sensor[3][3].setBackground(Color.WHITE);
+        this.sensor[4][4].setBackground(Color.WHITE);
+        this.sensor[2][5].setBackground(Color.WHITE);
+        
+        this.machineName.setText(platformView.getDecisionSupportEngine().getMachine("03").getMachineName());
+        this.machineNumber.setText(platformView.getDecisionSupportEngine().getMachine("03").getMachineID());
     }
     
     public PlatformView getMainView(){
@@ -259,5 +277,17 @@ public class PlatformDisplayMachine03 extends JPanel{
                 this.sensor[s][t].setText(sensor[s]);
             }
         }
+        
+        for (int t = 0; t < NO_OF_TESTS; t++){
+            if(test[t]=="GREEN"){
+                this.test[t].setBackground(Color.GREEN);
+            } else if(test[t]=="AMBER"){
+                this.test[t].setBackground(Color.ORANGE);
+            }  else {
+                this.test[t].setBackground(Color.RED);
+            }
+                    
+        }
+        
     }
 }

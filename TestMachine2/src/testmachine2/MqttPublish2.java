@@ -1,16 +1,11 @@
 package testmachine2;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
 
-
-/**
- *
- * @author phidi
- */
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +28,7 @@ public class MqttPublish2 {
     //private static String broker1 = "tcp://localhost:1883";
     private static String broker2 = "tcp://localhost:1883";
     private static String broker3 = "tcp://localhost:1883";
-    private static String clientId = "JavaSample";
+    private static String clientId = "testMachine03";
     public static MqttClient newClient1, newClient2;
     public static int sensor1 = 0, sensor2 = 0, sensor3 = 0, sensor4 = 0, sensor5 = 0;
     

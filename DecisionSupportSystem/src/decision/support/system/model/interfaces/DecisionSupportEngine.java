@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model.interfaces;
 
 import java.util.Collection;
@@ -10,10 +11,6 @@ import java.util.Date;
 import java.util.Set;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
-/**
- *
- * @author Phidias Burnell
- */
 public interface DecisionSupportEngine {
     
     /**

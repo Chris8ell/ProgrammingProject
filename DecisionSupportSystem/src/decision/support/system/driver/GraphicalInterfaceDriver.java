@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.driver;
 
 import decision.support.system.view.PlatformView;
@@ -14,10 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
-/**
- *
- * @author Phidias Burnell
- */
 public class GraphicalInterfaceDriver {
     private static final DecisionSupportEngine decisionSupportEngine = new DecisionSupportEngineImpl();
     

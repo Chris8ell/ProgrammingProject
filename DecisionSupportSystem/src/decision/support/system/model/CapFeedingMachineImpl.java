@@ -1,23 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model;
 
 import decision.support.system.model.interfaces.CapFeedingMachine;
 import decision.support.system.model.interfaces.DecisionSupportEngine;
+import java.util.ArrayList;
+import java.util.Date;
 
-/**
- *
- * @author Phidias Burnell
- */
 public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMachine {
     
     int test;
+    ArrayList<Date> sensorOneTime = new ArrayList<Date>();
+    ArrayList<Date> sensorTwoTime = new ArrayList<Date>();
+    boolean sensorTestOne = false;
+    boolean sensorTestTwo = false;
     
     public CapFeedingMachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine) {
-        super(machineID, decisionSupportEngine, NUMBER_OF_TESTS);
+        super(machineID, MACHINE_NAME, decisionSupportEngine, NUMBER_OF_TESTS);
         super.initialiseSensors(CAP_FEED_MACHINE_SENSORS);
     }
     
@@ -30,11 +33,69 @@ public class CapFeedingMachineImpl extends MachineImpl implements CapFeedingMach
          *  Test 1: 
          *  if sensor 1 is triggered, sensor 2 should trigger within 4 seconds 
          *      amber <6< red
-         *
+         */
+        Date currentTime = new Date();
+        test = 1;
+        super.getTestArray()[test-1] = statusFlag.GREEN;
+        
+        if (super.getSensor("01").getSensorData()==1)
+            if(sensorOneTime.isEmpty()){
+                sensorOneTime.add(super.getSensor("01").getTimeStamp());
+                sensorTestOne = true;
+            } else if (0 != super.getSensor("01").getTimeStamp().getTime()-sensorOneTime.get(sensorOneTime.size()-1).getTime()){
+                sensorOneTime.add(super.getSensor("01").getTimeStamp());
+                sensorTestOne = true;
+            }
+        
+        if (super.getSensor("02").getSensorData()==0 && sensorTestOne == true){
+            long seconds = (currentTime.getTime()-sensorOneTime.get(0).getTime())/1000;
+            if (seconds>1){
+                super.getTestArray()[test-1] = statusFlag.AMBER;
+            }else if (seconds>2){
+                super.getTestArray()[test-1] = statusFlag.RED;
+            } else {
+                super.getTestArray()[test-1] = statusFlag.GREEN;
+            }
+        } else if  (super.getSensor("02").getSensorData()==1){
+            sensorOneTime.clear();
+            sensorTestOne = false;
+            super.getTestArray()[test-1] = statusFlag.GREEN;
+        }
+        
+        /*
          *  Test 2:
          *  if sensor 2 is trigerred sensor 3 should trigger within 0.5 second
          *      amber <1< red
-         *
+         */
+        
+        test = 2;
+        super.getTestArray()[test-1] = statusFlag.GREEN;
+        
+        if (super.getSensor("02").getSensorData()==1)
+            if(sensorTwoTime.isEmpty()){
+                sensorTwoTime.add(super.getSensor("02").getTimeStamp());
+                sensorTestTwo = true;
+            } else if (0 != super.getSensor("02").getTimeStamp().getTime()-sensorTwoTime.get(sensorTwoTime.size()-1).getTime()){
+                sensorTwoTime.add(super.getSensor("02").getTimeStamp());
+                sensorTestTwo = true;
+            }
+        
+        if (super.getSensor("03").getSensorData()==0 && sensorTestTwo == true){
+            long seconds = (currentTime.getTime()-sensorTwoTime.get(0).getTime())%1000;
+            if (seconds>0.05){
+                super.getTestArray()[test-1] = statusFlag.AMBER;
+            }else if (seconds>0.1){
+                super.getTestArray()[test-1] = statusFlag.RED;
+            } else {
+                super.getTestArray()[test-1] = statusFlag.GREEN;
+            }
+        } else if  (super.getSensor("03").getSensorData()==1){
+            sensorTwoTime.clear();
+            sensorTestTwo = false;
+            super.getTestArray()[test-1] = statusFlag.GREEN;
+        }        
+        
+        /*
          *  Test 3:
          *  if sensor 3 is triggered sensor 4 should trigger within 1 second if sensor 1 count is > 1
          *      amber <2< red

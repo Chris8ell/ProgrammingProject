@@ -1,14 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model;
 
 import decision.support.system.model.interfaces.DecisionSupportEngine;
 import java.util.Date;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -16,23 +16,18 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-/**
- *
- * @author Phidias Burnell
- */
-
 public class DataCollection implements MqttCallback{
  
     //private final String[] sensor;
     private String folder = "";
     private String fileName = "";
     private String[] channel;
-    private int[] qos;
+    private int qos;
     
     MemoryPersistence dataStore = new MemoryPersistence();
     MqttConnectOptions connOpts = new MqttConnectOptions();
-    //MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
-    MqttAsyncClient client=new MqttAsyncClient("tcp://localhost:1883", MqttClient.generateClientId(),dataStore);
+    MqttClient client=new MqttClient("tcp://localhost:1883", MqttClient.generateClientId());
+    //MqttAsyncClient client=new MqttAsyncClient("tcp://localhost:1883", MqttClient.generateClientId(),dataStore);
     
     DecisionSupportEngine decisionSupportEngine;
 
@@ -43,15 +38,12 @@ public class DataCollection implements MqttCallback{
     
     public void startSubscriber(String[] channel) throws MqttException {
         this.channel = channel;
-        this.qos = new int[this.channel.length];
-        for(int i = 0; i < this.channel.length; i ++){
-            this.qos[i]=2;
-        }
+        
         
         client.setCallback(this);
         client.connect(connOpts);
         try {
-            client.subscribe(this.channel, this.qos);
+            client.subscribe(this.channel);
         } catch (MqttException e) {
             System.out.println(e.getMessage());
             System.out.println(e.getReasonCode());
@@ -72,8 +64,6 @@ public class DataCollection implements MqttCallback{
         machineNumber = s.split("/");
         splitLine = tempString.split(":");  
         Date timestamp = new Date();
-        
-        System.out.println(machineNumber[1]);
         
         try{
              decisionSupportEngine.addDataToSensors(

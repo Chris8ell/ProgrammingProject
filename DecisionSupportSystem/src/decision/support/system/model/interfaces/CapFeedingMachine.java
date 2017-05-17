@@ -1,14 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model.interfaces;
 
-/**
- *
- * @author Phidias Burnell
- */
 public interface CapFeedingMachine {
     static final String[] SENSORID = new String[] {
                 "01",
@@ -18,8 +15,8 @@ public interface CapFeedingMachine {
                 "05"};
     
     static final String[] TESTS = new String[] {
-                "If sensor 1 is triggered, sensor 2 should trigger within 4 seconds. amber <6< red",
-                "If sensor 2 is trigerred sensor 3 should trigger within 0.5 second. amber <1< red",
+                "If sensor 1 is triggered, sensor 2 should trigger within 2 seconds. 1 < amber, 2 < red",
+                "If sensor 2 is trigerred sensor 3 should trigger within 0.5 second. 0.5 < amber, 1 < red",
                 "If sensor 3 is triggered sensor 4 should trigger within 1 second if sensor 1 count is > 1. amber <2< red",
                 "Sensor 3 count should always be less than or equal to sensor 2 count. red <-1...0 >= red",
                 "Sensor 4 count should always be less than or equal to sensor 3 count. > red",
@@ -33,4 +30,6 @@ public interface CapFeedingMachine {
                 SENSORID[4]+":"+Sensor.sensorType.RANGE};
     
     static final int NUMBER_OF_TESTS = 6;
+    
+    static final String MACHINE_NAME = "Cap Feeding Machine";
 }

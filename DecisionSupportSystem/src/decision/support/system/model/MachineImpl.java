@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Phidias Burnell (s2066815)
+ * Christopher James Bell (s3243530)
+ * Programming Project Assignment - CPT331
  */
+
 package decision.support.system.model;
 
 import static decision.support.system.model.interfaces.CapFeedingMachine.SENSORID;
@@ -12,21 +13,18 @@ import decision.support.system.model.interfaces.Machine;
 import decision.support.system.model.interfaces.Sensor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
 
-/**
- *
- * @author Phidias Burnell
- */
 public class MachineImpl implements Machine{
     
     private final String machineID;
+    private final String machineName;
     private final DecisionSupportEngine decisionSupportEngine;
     private final statusFlag tests[];
     private final Map <String, Sensor> sensors = new ConcurrentHashMap <>();
 
-    public MachineImpl(String machineID, DecisionSupportEngine decisionSupportEngine, int sensorQty) {
+    public MachineImpl(String machineID, String machineName, DecisionSupportEngine decisionSupportEngine, int sensorQty) {
         this.machineID = machineID;
+        this.machineName = machineName;
         this.decisionSupportEngine = decisionSupportEngine;
         this.tests = new statusFlag[sensorQty];
     }
@@ -61,6 +59,11 @@ public class MachineImpl implements Machine{
     @Override
     public String getMachineID() {
         return machineID;
+    }
+    
+    @Override
+    public String getMachineName() {
+        return machineName;
     }
     
     @Override
